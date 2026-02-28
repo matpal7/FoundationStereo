@@ -1,5 +1,6 @@
 import glob
 import os
+from pathlib import Path
 
 import numpy as np
 import cv2
@@ -18,12 +19,17 @@ def save_dict(calib_dict, out_folder, file_name='calib_data.npy'):
     np.save(npy_path, calib_dict)
     print("Wrote calib data to: ", npy_path)
 
+def _idx(p):
+    return int(Path(p).stem.split("_")[0])
 
 def get_l_r_image_fnames(img_folder, max_imgs=None):
     glob_string_l = '{}/*_left.png'.format(img_folder)
     glob_string_r = '{}/*_right.png'.format(img_folder)
-    images_l = sorted(glob.glob(glob_string_l))
-    images_r = sorted(glob.glob(glob_string_r))
+    images_l = glob.glob(glob_string_l)
+    images_r = glob.glob(glob_string_r)
+
+    images_l = sorted(images_l, key=_idx)
+    images_r = sorted(images_r, key=_idx)
 
     if max_imgs is not None:
         images_l = images_l[:max_imgs]

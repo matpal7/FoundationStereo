@@ -17,8 +17,10 @@ print(img_dir)
 print(calib_dict_file)
 max_imgs = 5
 
+
 # images_l, images_r = get_l_r_image_fnames(img_dir, max_imgs)
-# imgs_l, imgs_r = load_l_r_images_undistorted(
-#         calib_dict, img_dir, max_imgs=max_imgs
-#     )
-show_undistorted_images(calib_dict, img_dir, max_imgs=max_imgs)
+imgs_l, imgs_r = load_l_r_images_undistorted(
+        calib_dict, img_dir, max_imgs=max_imgs
+    )
+
+# show_undistorted_images(calib_dict, img_dir, max_imgs=max_imgs)

@@ -1,10 +1,11 @@
 import os.path
+from pathlib import Path
 
 import cv2
 import numpy as np
 import re
 
-from utils import get_l_r_image_fnames, get_depth_rgb_image_fnames
+from image_common.utils import get_l_r_image_fnames, get_depth_rgb_image_fnames
 
 
 class Image():
@@ -12,10 +13,16 @@ class Image():
         self.pose = None
         self.img_path = img_path
         self.img_basename = os.path.basename(img_path)
+        self.number = self._get_number(img_path)
 
         img_distorted = cv2.imread(img_path)
         self.img = undistort_function(img_distorted)
         self.dims = (self.img.shape[1], self.img.shape[0])
+
+    def _get_number(self, path):
+        filename = Path(path).stem
+        number = int(filename.split("_")[0])
+        return number
 
     def get_small_img(self, scale=4):
         mini_dims = self.scaled_dims(scale)
